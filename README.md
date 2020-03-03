@@ -19,6 +19,25 @@ $ go get -u github.com/alexplom/university-gin-app
 
 That's it, you should be up and running on `localhost:8080`. If you need to listen to a custom port you can change `r.Run()` to `r.Run(":1337")`.
 
+## **Oooor You can try it online**
+
+- **`GET`**
+  `https://university-gin-app.herokuapp.com/`
+
+- **`GET`**
+  `https://university-gin-app.herokuapp.com/query?name=YourName&age=30`
+
+- **`GET`**
+  `https://university-gin-app.herokuapp.com/path/YourName/30`
+
+- **`POST`**
+  `https://university-gin-app.herokuapp.com/`
+  ```json
+  {
+    "key": "value"
+  }
+  ```
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
