@@ -1,11 +1,31 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
+
+// Catfact is a fact about a cat
+type Catfact struct {
+	Text string
+}
+
+var myClient = &http.Client{Timeout: 10 * time.Second}
+
+func getJSON(url string, target interface{}) error {
+	r, err := myClient.Get(url)
+	if err != nil {
+		return err
+	}
+	defer r.Body.Close()
+
+	return json.NewDecoder(r.Body).Decode(target)
+}
 
 func main() {
 	fmt.Println("Starting the Go Application!")
@@ -20,9 +40,11 @@ func main() {
 
 // GetMessage Gets a simple message.
 func GetMessage(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Hello world!",
-	})
+
+	catFact := new(Catfact)
+	getJSON("https://cat-fact.herokuapp.com/facts/random", catFact)
+
+	c.JSON(200, catFact)
 }
 
 // PostMessage Accepts a body of any type and returns it.
